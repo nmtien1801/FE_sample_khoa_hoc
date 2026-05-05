@@ -9,7 +9,7 @@ import {
     Mail,
     Globe,
 } from "lucide-react";
-import ApiContact from "../apis/ApiContact";
+// import ApiContact from "../apis/ApiContact";
 import { toast } from 'react-toastify'
 
 const ServiceCommitment = ({ icon: Icon, title, description }) => (
@@ -44,25 +44,25 @@ export default function Footer() {
         { name: "Zalo", src: "/zalo.webp", href: "#" }
     ];
 
-    const handleSend = async (e) => {
-        e.preventDefault();
-        try {
-            setLoading(true);
-            const contactData = {
-                name: "client",
-                email: email,
-                message: `Tôi đang quan tâm đến sản phẩm của bạn. Hãy liên hệ với tôi sớm nhất có thể!`,
-            };
-            let res = await ApiContact.sendContactApi(contactData);
-            toast.success('Đã gửi thông tin liên hệ thành công!');
-            setEmail('');
-        } catch (error) {
-            console.error('Error sending contact:', error);
-            toast.error('Gửi thông tin liên hệ thất bại. Vui lòng thử lại.');
-        } finally {
-            setLoading(false);
-        }
-    };
+    // const handleSend = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         setLoading(true);
+    //         const contactData = {
+    //             name: "client",
+    //             email: email,
+    //             message: `Tôi đang quan tâm đến sản phẩm của bạn. Hãy liên hệ với tôi sớm nhất có thể!`,
+    //         };
+    //         let res = await ApiContact.sendContactApi(contactData);
+    //         toast.success('Đã gửi thông tin liên hệ thành công!');
+    //         setEmail('');
+    //     } catch (error) {
+    //         console.error('Error sending contact:', error);
+    //         toast.error('Gửi thông tin liên hệ thất bại. Vui lòng thử lại.');
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     return (
         <footer className="text-white mt-8 font-sans">
@@ -156,7 +156,7 @@ export default function Footer() {
                             />
                             <button
                                 disabled={loading}
-                                onClick={handleSend}
+                                // onClick={handleSend}
                                 className={`
                                     px-6 text-sm font-bold uppercase transition-colors cursor-pointer
                                     ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-black hover:bg-zinc-800"}
