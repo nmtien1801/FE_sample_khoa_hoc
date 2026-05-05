@@ -1,49 +1,49 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card } from "../components/common";
+import { Card } from "../../components/common";
 
 const samples = [
     {
-        id: "sample1",
+        id: "layout1",
         title: "Mẫu Dạy học Online 1",
         description: "Nền tảng học trực tuyến với giao diện hiện đại, quản lý khóa học và bài giảng.",
         image: "/sample/Dạy học online 1.png",
-        path: "/samples/sample1",
+        path: "/layout1",
     },
     {
-        id: "sample2",
+        id: "layout2",
         title: "Mẫu Dạy học Online 2",
         description: "Giao diện sáng tạo với tính năng tương tác cao và quản lý giảng viên.",
         image: "/sample/Dạy học online 2.png",
-        path: "/samples/sample2",
+        path: "/layout2",
     },
     {
-        id: "sample3",
+        id: "layout3",
         title: "Mẫu Online Academy",
         description: "Hệ thống học tập toàn diện với báo cáo chi tiết và thống kê.",
         image: "/sample/Dạy học online.png",
-        path: "/samples/sample3",
+        path: "/layout3",
     },
     {
-        id: "sample4",
+        id: "layout4",
         title: "Mẫu Trung tâm Tiếng Anh",
         description: "Chương trình học tiếng Anh chuẩn quốc tế với lộ trình IELTS.",
         image: "/sample/Trung tâm Tiếng Anh.png",
-        path: "/samples/sample4",
+        path: "/layout4",
     },
     {
-        id: "sample5",
+        id: "layout5",
         title: "Mẫu Trung tâm Tiếng Hàn",
         description: "Khóa học tiếng Hàn hiện đại, từ cơ bản đến TOPIK chuyên sâu.",
         image: "/sample/Trung tâm tiếng Hàn.png",
-        path: "/samples/sample5",
+        path: "/layout5",
     },
     {
-        id: "sample6",
+        id: "layout6",
         title: "Mẫu Trung tâm Tiếng Trung",
         description: "Lộ trình học tiếng Trung chuẩn HSK với phương pháp hiệu quả.",
         image: "/sample/Trung tâm tiếng Trung.png",
-        path: "/samples/sample6",
+        path: "/layout6",
     },
 ];
 

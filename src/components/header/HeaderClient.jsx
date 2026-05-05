@@ -5,11 +5,11 @@ import { toast } from 'react-toastify';
 
 // MOCK DATA: Dữ liệu giả lập cho danh mục và sản phẩm/khóa học
 const MOCK_CATEGORIES = [
-  { id: 1, name: "Dạy học Online", path: "/sample1" },
-  { id: 2, name: "Tiếng Anh", path: "/sample4" },
-  { id: 3, name: "Tiếng Hàn", path: "/sample2" },
-  { id: 4, name: "Tiếng Trung", path: "/sample3" },
-  { id: 5, name: "Tiếng Nhật", path: "/sample5" },
+  { id: 1, name: "Dạy học Online", path: "/layout1" },
+  { id: 2, name: "Tiếng Anh", path: "/layout4" },
+  { id: 3, name: "Tiếng Hàn", path: "/layout2" },
+  { id: 4, name: "Tiếng Trung", path: "/layout3" },
+  { id: 5, name: "Tiếng Nhật", path: "/layout5" },
 ];
 
 const MOCK_PRODUCTS = [
@@ -33,11 +33,11 @@ export default function Header() {
 
   const menuItems = [
     { label: "TRANG CHỦ", path: "/" }, // Quay về Portal
-    { label: "DẠY HỌC ONLINE", path: "/sample1" },
-    { label: "TIẾNG ANH", path: "/sample4" },
-    { label: "TIẾNG HÀN", path: "/sample2" },
-    { label: "TIẾNG TRUNG", path: "/sample3" },
-    { label: "TIẾNG NHẬT", path: "/sample5" },
+    { label: "DẠY HỌC ONLINE", path: "/layout1" },
+    { label: "TIẾNG ANH", path: "/layout4" },
+    { label: "TIẾNG HÀN", path: "/layout2" },
+    { label: "TIẾNG TRUNG", path: "/layout3" },
+    { label: "TIẾNG NHẬT", path: "/layout5" },
     { label: "LIÊN HỆ", path: "/lien-he" },
   ];
 
@@ -57,8 +57,8 @@ export default function Header() {
 
   const handleSearch = () => {
     if (!searchQuery.trim()) return toast.warning("Vui lòng nhập từ khóa!");
-    
-    const exactMatch = MOCK_PRODUCTS.find(p => 
+
+    const exactMatch = MOCK_PRODUCTS.find(p =>
       p.name.toLowerCase().trim() === searchQuery.toLowerCase().trim() ||
       p.maSP.toLowerCase().trim() === searchQuery.toLowerCase().trim()
     );
@@ -77,7 +77,7 @@ export default function Header() {
     <header className="bg-[#ed792f] shadow-md sticky top-0 z-50 w-full text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-3 flex items-center justify-between gap-4">
-          
+
           {/* LOGO */}
           <div className="flex-shrink-0">
             <NavLink to="/">
@@ -155,9 +155,8 @@ export default function Header() {
             <NavLink
               key={item.label}
               to={item.path}
-              className={({ isActive }) => 
-                `px-5 py-3 text-[12px] font-bold transition-all border-b-2 ${
-                  isActive ? "text-[#ed792f] border-[#ed792f]" : "text-gray-600 border-transparent hover:text-[#ed792f]"
+              className={({ isActive }) =>
+                `px-5 py-3 text-[12px] font-bold transition-all border-b-2 ${isActive ? "text-[#ed792f] border-[#ed792f]" : "text-gray-600 border-transparent hover:text-[#ed792f]"
                 }`
               }
             >
@@ -177,9 +176,9 @@ export default function Header() {
             </div>
             <div className="space-y-2">
               {menuItems.map(item => (
-                <NavLink 
-                  key={item.label} 
-                  to={item.path} 
+                <NavLink
+                  key={item.label}
+                  to={item.path}
                   className="block p-3 rounded-lg text-gray-700 font-bold hover:bg-orange-50 hover:text-[#ed792f]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

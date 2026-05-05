@@ -1,28 +1,38 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ClientLayout from "../components/layout/ClientLayout.jsx";
-import LandingPage from "../components/LandingPage.jsx";
-import Sample1 from "../clientPages/sample1/Index.jsx";
-import Sample2 from "../clientPages/sample2/Index.jsx";
-import Sample3 from "../clientPages/sample3/Index.jsx";
-import Sample4 from "../clientPages/sample4/Index.jsx";
-import Sample5 from "../clientPages/sample5/Index.jsx";
-import Sample6 from "../clientPages/sample6/Index.jsx";
+import PortalPage from "../clientPages/portal/TrangChu.jsx";
+import Layout1TrangChu from "../clientPages/layout1/TrangChu.jsx";
+import Layout2TrangChu from "../clientPages/layout2/TrangChu.jsx";
+import Layout3TrangChu from "../clientPages/layout3/TrangChu.jsx";
+import Layout4TrangChu from "../clientPages/layout4/TrangChu.jsx";
+import Layout5TrangChu from "../clientPages/layout5/TrangChu.jsx";
+import Layout6TrangChu from "../clientPages/layout6/TrangChu.jsx";
 
 function AppRouter() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/samples" element={<ClientLayout />}>
-                    <Route path="sample1" element={<Sample1 />} />
-                    <Route path="sample2" element={<Sample2 />} />
-                    <Route path="sample3" element={<Sample3 />} />
-                    <Route path="sample4" element={<Sample4 />} />
-                    <Route path="sample5" element={<Sample5 />} />
-                    <Route path="sample6" element={<Sample6 />} />
+                <Route path="/" element={<PortalPage />} />
+                <Route path="/layout1" element={<ClientLayout />}>
+                    <Route index element={<Layout1TrangChu />} />
                 </Route>
-                <Route path="/*" element={<LandingPage />} />
+                <Route path="/layout2" element={<ClientLayout />}>
+                    <Route index element={<Layout2TrangChu />} />
+                </Route>
+                <Route path="/layout3" element={<ClientLayout />}>
+                    <Route index element={<Layout3TrangChu />} />
+                </Route>
+                <Route path="/layout4" element={<ClientLayout />}>
+                    <Route index element={<Layout4TrangChu />} />
+                </Route>
+                <Route path="/layout5" element={<ClientLayout />}>
+                    <Route index element={<Layout5TrangChu />} />
+                </Route>
+                <Route path="/layout6" element={<ClientLayout />}>
+                    <Route index element={<Layout6TrangChu />} />
+                </Route>
+                <Route path="/*" element={<PortalPage />} />
             </Routes>
         </Router>
     );
