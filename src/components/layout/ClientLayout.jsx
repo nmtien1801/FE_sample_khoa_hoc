@@ -4,14 +4,12 @@ import {
     useLocation,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Header from "../header/HeaderClient";
-import Footer from "../footer";
 import { ArrowUp } from "lucide-react";
 import { getListCategory } from '../../redux/categorySlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-function ClientLayout() {
+function ClientLayout({ header: HeaderComponent, footer: FooterComponent }) {
     const dispatch = useDispatch();
     const { CategoryList, CategoryTotal } = useSelector((state) => state.category);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -64,17 +62,19 @@ function ClientLayout() {
     return (
         <div className="h-screen w-full bg-gray-50 text-gray-800 font-sans">
             <div className="flex flex-col h-full transition-all duration-300">
-                {/* Header */}
-                <Header
-                    categories={CategoryList}
-                    isMobileMenuOpen={isMobileMenuOpen}
-                    setIsMobileMenuOpen={setIsMobileMenuOpen}
-                />
+                {/* Render Header nếu được truyền vào */}
+                {HeaderComponent && (
+                    <HeaderComponent
+                        categories={CategoryList}
+                        isMobileMenuOpen={isMobileMenuOpen}
+                        setIsMobileMenuOpen={setIsMobileMenuOpen}
+                    />
+                )}
 
-                {/* Main Content */}
                 <main ref={mainRef} className="flex-1 overflow-y-auto">
                     <Outlet />
-                    <Footer />
+                    {/* Render Footer nếu được truyền vào */}
+                    {FooterComponent && <FooterComponent />}
                 </main>
             </div>
 
