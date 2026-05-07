@@ -13,37 +13,9 @@ const samples = [
     {
         id: "layout2",
         title: "Mẫu Dạy học Online 2",
-        description: "Giao diện sáng tạo với tính năng tương tác cao và quản lý giảng viên.",
+        description: "Giao diện bán khóa học đa dạng, phù hợp không chỉ cho 1 khóa mà cho cả hệ thống học online.",
         image: "/sample/Dạy học online 2.png",
         path: "/layout2",
-    },
-    {
-        id: "layout3",
-        title: "Mẫu Online Academy",
-        description: "Hệ thống học tập toàn diện với báo cáo chi tiết và thống kê.",
-        image: "/sample/Dạy học online.png",
-        path: "/layout3",
-    },
-    {
-        id: "layout4",
-        title: "Mẫu Trung tâm Tiếng Anh",
-        description: "Chương trình học tiếng Anh chuẩn quốc tế với lộ trình IELTS.",
-        image: "/sample/Trung tâm Tiếng Anh.png",
-        path: "/layout4",
-    },
-    {
-        id: "layout5",
-        title: "Mẫu Trung tâm Tiếng Hàn",
-        description: "Khóa học tiếng Hàn hiện đại, từ cơ bản đến TOPIK chuyên sâu.",
-        image: "/sample/Trung tâm tiếng Hàn.png",
-        path: "/layout5",
-    },
-    {
-        id: "layout6",
-        title: "Mẫu Trung tâm Tiếng Trung",
-        description: "Lộ trình học tiếng Trung chuẩn HSK với phương pháp hiệu quả.",
-        image: "/sample/Trung tâm tiếng Trung.png",
-        path: "/layout6",
     },
 ];
 

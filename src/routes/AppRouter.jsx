@@ -3,13 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ClientLayout from "../components/layout/ClientLayout.jsx";
 import PortalPage from "../clientPages/portal/TrangChu.jsx";
 import Layout2TrangChu from "../clientPages/layout2/TrangChu.jsx";
-import Layout3TrangChu from "../clientPages/layout3/TrangChu.jsx";
-import Layout4TrangChu from "../clientPages/layout4/TrangChu.jsx";
-import Layout5TrangChu from "../clientPages/layout5/TrangChu.jsx";
-import Layout6TrangChu from "../clientPages/layout6/TrangChu.jsx";
-
-import Header from "../components/header/HeaderClient.jsx";
-import Footer from "../components/footer.jsx";
+import Layout2Courses from "../clientPages/layout2/Courses.jsx";
+import Layout2CourseDetail from "../clientPages/layout2/CourseDetail.jsx";
+import Layout2Cart from "../clientPages/layout2/Cart.jsx";
+import Layout2TinTuc from "../clientPages/layout2/TinTuc.jsx";
+import Layout2LienHe from "../clientPages/layout2/LienHe.jsx";
 
 import Header1 from "../clientPages/layout1/header.jsx";
 import Footer1 from "../clientPages/layout1/footer.jsx";
@@ -23,6 +21,9 @@ import Layout1BaiViet from "../clientPages/layout1/BaiViet.jsx";
 import Layout1ClientLogin from "../clientPages/layout1/ClientLogin.jsx";
 import Layout1LessonsList from "../clientPages/layout1/LessonsList.jsx";
 import Layout1LessonDetail from "../clientPages/layout1/LessonDetail.jsx";
+
+import Header2 from "../clientPages/layout2/header.jsx";
+import Footer2 from "../clientPages/layout2/footer.jsx";
 
 function AppRouter() {
     return (
@@ -42,20 +43,14 @@ function AppRouter() {
                     <Route path="lessons" element={<Layout1LessonsList />} />
                     <Route path="lessons/:id" element={<Layout1LessonDetail />} />
                 </Route>
-                <Route path="/layout2" element={<ClientLayout header={Header} footer={Footer} />}>
+
+                <Route path="/layout2" element={<ClientLayout header={Header2} footer={Footer2} />}>
                     <Route index element={<Layout2TrangChu />} />
-                </Route>
-                <Route path="/layout3" element={<ClientLayout header={Header} footer={Footer} />}>
-                    <Route index element={<Layout3TrangChu />} />
-                </Route>
-                <Route path="/layout4" element={<ClientLayout header={Header} footer={Footer} />}>
-                    <Route index element={<Layout4TrangChu />} />
-                </Route>
-                <Route path="/layout5" element={<ClientLayout header={Header} footer={Footer} />}>
-                    <Route index element={<Layout5TrangChu />} />
-                </Route>
-                <Route path="/layout6" element={<ClientLayout header={Header} footer={Footer} />}>
-                    <Route index element={<Layout6TrangChu />} />
+                    <Route path="courses" element={<Layout2Courses />} />
+                    <Route path="courses/:id" element={<Layout2CourseDetail />} />
+                    <Route path="cart" element={<Layout2Cart />} />
+                    <Route path="tin-tuc" element={<Layout2TinTuc />} />
+                    <Route path="lien-he" element={<Layout2LienHe />} />
                 </Route>
                 <Route path="/*" element={<PortalPage />} />
             </Routes>

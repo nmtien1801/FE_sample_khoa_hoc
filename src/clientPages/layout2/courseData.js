@@ -1,0 +1,90 @@
+export const courses = [
+  {
+    id: 1,
+    slug: "khoa-hoc-marketing-online",
+    title: "Marketing Online Thực Chiến",
+    category: "Kinh doanh khởi nghiệp",
+    description:
+      "Hành trình 12 buổi giúp bạn nắm vững chiến lược marketing, quảng cáo và xây dựng thương hiệu trên mạng.",
+    price: 1890000,
+    oldPrice: 3490000,
+    duration: "12 buổi",
+    level: "Cơ bản - Trung cấp",
+    students: 1520,
+    image: "https://picsum.photos/seed/marketing/760/520",
+    details: [
+      "Giới thiệu hệ thống Marketing Online cho người mới bắt đầu.",
+      "Xây dựng khách hàng tiềm năng và kịch bản bán hàng.",
+      "Thiết lập Facebook Ads, TikTok Ads và Email Marketing.",
+      "Phân tích dữ liệu, tối ưu ngân sách và tăng ROI.",
+    ],
+  },
+  {
+    id: 2,
+    slug: "khoa-hoc-content-creator",
+    title: "Content Creator & Bán Hàng",
+    category: "Kĩ năng ngoại ngữ",
+    description:
+      "Khóa học thiết kế nội dung, quay video và bán hàng trên các nền tảng TikTok / YouTube.",
+    price: 1590000,
+    oldPrice: 2790000,
+    duration: "10 buổi",
+    level: "Cơ bản",
+    students: 980,
+    image: "https://picsum.photos/seed/content/760/520",
+    details: [
+      "Kịch bản nội dung viral và cấu trúc video chuẩn.",
+      "Kỹ thuật quay phim đơn giản bằng điện thoại.",
+      "Tối ưu SEO cho YouTube và TikTok.",
+      "Bí quyết tăng chuyển đổi từ người xem thành khách hàng.",
+    ],
+  },
+  {
+    id: 3,
+    slug: "khoa-hoc-web-design",
+    title: "Xây Dựng Website Bán Hàng",
+    category: "Công nghệ thông tin",
+    description:
+      "Từ landing page đến trang thanh toán: tạo website chuyên nghiệp giúp bán khóa học và sản phẩm số.",
+    price: 1690000,
+    oldPrice: 2990000,
+    duration: "11 buổi",
+    level: "Cơ bản",
+    students: 820,
+    image: "https://picsum.photos/seed/web/760/520",
+    details: [
+      "Thiết kế giao diện landing page đẹp & chuẩn SEO.",
+      "Cài đặt form, đăng ký và thanh toán trực tuyến.",
+      "Tối ưu trải nghiệm người dùng trên mobile.",
+      "Kết hợp content bán hàng để tăng conversion.",
+    ],
+  },
+  {
+    id: 4,
+    slug: "khoa-hoc-branding-nhan-dien-thuong-hieu",
+    title: "Xây dựng Thương hiệu cá nhân",
+    category: "Phong cách sống",
+    description:
+      "Dành cho nhà sáng tạo, giảng viên và chuyên gia muốn tạo dấu ấn riêng giúp khóa học dễ bán hơn.",
+    price: 1290000,
+    oldPrice: 2490000,
+    duration: "8 buổi",
+    level: "Cơ bản",
+    students: 670,
+    image: "https://picsum.photos/seed/branding/760/520",
+    details: [
+      "Xác định giá trị nhân hiệu và thông điệp chính.",
+      "Xây dựng profile chuyên nghiệp trên nền tảng số.",
+      "Chiến lược nội dung huấn luyện, chia sẻ và bán hàng.",
+      "Quản lý hình ảnh cá nhân để tăng độ tin cậy.",
+    ],
+  },
+];
+
+export const categories = [
+  "Tất cả",
+  "Kinh doanh khởi nghiệp",
+  "Kĩ năng ngoại ngữ",
+  "Công nghệ thông tin",
+  "Phong cách sống",
+];
