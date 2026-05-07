@@ -52,6 +52,16 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  useEffect(() => {
+    const syncCartCount = () => setCartCount(getCartCount());
+    window.addEventListener("layout2CartUpdate", syncCartCount);
+    window.addEventListener("storage", syncCartCount);
+    return () => {
+      window.removeEventListener("layout2CartUpdate", syncCartCount);
+      window.removeEventListener("storage", syncCartCount);
+    };
+  }, []);
+
   return (
     <header className="w-full sticky top-0 z-50 bg-white shadow-sm font-sans">
       <div className="max-w-[1190px] mx-auto px-4 h-[70px] flex items-center gap-3">
@@ -185,7 +195,7 @@ export default function Header() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            <span className="absolute top-0.5 right-0.5 bg-[#f76758] text-white text-[8px] font-black w-3.5 h-3.5 rounded-full flex items-center justify-center">1</span>
+            <span className="absolute top-0.5 right-0.5 bg-[#f76758] text-white text-[8px] font-black w-3.5 h-3.5 rounded-full flex items-center justify-center">{cartCount}</span>
           </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
