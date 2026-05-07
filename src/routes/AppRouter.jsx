@@ -2,18 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ClientLayout from "../components/layout/ClientLayout.jsx";
 import PortalPage from "../clientPages/portal/TrangChu.jsx";
-import Layout2TrangChu from "../clientPages/layout2/TrangChu.jsx";
-import Layout2Courses from "../clientPages/layout2/Courses.jsx";
-import Layout2CourseDetail from "../clientPages/layout2/CourseDetail.jsx";
-import Layout2Cart from "../clientPages/layout2/Cart.jsx";
-import Layout2TinTuc from "../clientPages/layout2/TinTuc.jsx";
-import Layout2LienHe from "../clientPages/layout2/LienHe.jsx";
-import Layout2ClientLogin from "../clientPages/layout2/ClientLogin.jsx";
-import Layout2MyCourses from "../clientPages/layout2/MyCourses.jsx";
-import Layout2MyCourseDetail from "../clientPages/layout2/MyCourseDetail.jsx";
 
-import Header1 from "../clientPages/layout1/header.jsx";
-import Footer1 from "../clientPages/layout1/footer.jsx";
+import Header1 from "../clientPages/layout1/Header.jsx";
+import Footer1 from "../clientPages/layout1/Footer.jsx";
 import Layout1TrangChu from "../clientPages/layout1/TrangChu.jsx";
 import Layout1GioiThieu from "../clientPages/layout1/GioiThieu.jsx";
 import Layout1KhoaHoc from "../clientPages/layout1/KhoaHoc.jsx";
@@ -25,8 +16,17 @@ import Layout1ClientLogin from "../clientPages/layout1/ClientLogin.jsx";
 import Layout1LessonsList from "../clientPages/layout1/LessonsList.jsx";
 import Layout1LessonDetail from "../clientPages/layout1/LessonDetail.jsx";
 
-import Header2 from "../clientPages/layout2/header.jsx";
-import Footer2 from "../clientPages/layout2/footer.jsx";
+import Header2 from "../clientPages/layout2/Header.jsx";
+import Footer2 from "../clientPages/layout2/Footer.jsx";
+import Layout2TrangChu from "../clientPages/layout2/TrangChu.jsx";
+import Layout2Courses from "../clientPages/layout2/Courses.jsx";
+import Layout2CourseDetail from "../clientPages/layout2/CourseDetail.jsx";
+import Layout2Cart from "../clientPages/layout2/Cart.jsx";
+import Layout2TinTuc from "../clientPages/layout2/TinTuc.jsx";
+import Layout2LienHe from "../clientPages/layout2/LienHe.jsx";
+import Layout2ClientLogin from "../clientPages/layout2/ClientLogin.jsx";
+import Layout2MyCourses from "../clientPages/layout2/MyCourses.jsx";
+import Layout2MyCourseDetail from "../clientPages/layout2/MyCourseDetail.jsx";
 
 function AppRouter() {
     return (
