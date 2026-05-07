@@ -1,86 +1,141 @@
-import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { ShoppingCart, Search, Menu, X, Globe } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-const Header1 = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const navItems = [
+  { label: "Trang chủ", href: "" },
+  { label: "Giới thiệu", href: "gioi-thieu" },
+  {
+    label: "Kiến thức KDOL",
+    href: "#",
+    children: [
+      { label: "Khởi nghiệp", href: "khởi-nghiệp" },
+      { label: "Tiktok", href: "tiktok" },
+      { label: "Youtube", href: "youtube" },
+      { label: "Facebook", href: "facebook" },
+      { label: "Website", href: "website" },
+    ],
+  },
+  { label: "Tin tức KDOL", href: "tin-tuc" },
+  { label: "Bài viết chia sẻ", href: "bai-viet" },
+  { label: "Liên hệ", href: "lien-he" },
+];
 
-  // Lưu ý: to="khoa-hoc" (không có /) để nó tự động nối thành /layout1/khoa-hoc
-  const menuItems = [
-    { name: 'Trang chủ', path: '' },
-    { name: 'Khóa học', path: 'khoa-hoc' },
-    { name: 'Giới thiệu', path: 'gioi-thieu' },
-    { name: 'Tin tức', path: 'tin-tuc' },
-    { name: 'Liên hệ', path: 'lien-he' },
-  ];
+export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Xử lý hiệu ứng khi scroll (giống class .scrolled cũ)
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+    <header
+      className={`fixed top-0 left-0 right-0 z-[1000] font-['Be_Vietnam_Pro'] transition-all duration-300 h-20 flex items-center
+      ${scrolled ? "bg-[#02173e] shadow-2xl" : "bg-[#02173e]/90"}`}
+    >
+      <div className="max-w-[1270px] w-full mx-auto px-6 flex items-center justify-between">
+
         {/* Logo */}
-        <Link to="/layout1" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:rotate-12 transition-transform">
-            E1
+        <Link to="#" className="flex items-center gap-[10px] group">
+          <div className="w-[42px] h-[42px] bg-[#ff9000] rounded-[10px] flex items-center justify-center text-xl font-[800] text-white shrink-0 shadow-lg group-hover:scale-105 transition-transform">
+            K
           </div>
-          <span className="text-xl font-black text-gray-900 tracking-tighter">EDUCORE</span>
+          <div className="flex flex-col leading-[1.1]">
+            <span className="text-[15px] font-[800] text-white tracking-[0.5px]">KDOL Academy</span>
+            <span className="text-[11px] font-[500] text-[#ff9000] tracking-[1px] uppercase">Kinh doanh online</span>
+          </div>
         </Link>
 
-        {/* Desktop Menu */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {menuItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.path === ''}
-              className={({ isActive }) =>
-                `text-sm font-bold transition-all hover:text-indigo-600 ${
-                  isActive ? 'text-indigo-600 underline underline-offset-8' : 'text-gray-500'
-                }`
-              }
-            >
-              {item.name}
-            </NavLink>
-          ))}
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-1">
+          <ul className="flex items-center gap-1 list-none">
+            {navItems.map((item) => (
+              <li key={item.label} className="relative group/item">
+                <Link
+                  to={item.href}
+                  className="flex items-center gap-1 text-[13px] font-[600] text-white/90 uppercase tracking-[0.5px] px-[14px] py-2 rounded-md hover:text-[#ff9000] hover:bg-white/10 transition-all whitespace-nowrap"
+                >
+                  {item.label}
+                  {item.children && (
+                    <svg className="w-3 h-3 transition-transform group-hover/item:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  )}
+                </Link>
+
+                {/* Dropdown Menu */}
+                {item.children && (
+                  <ul className="absolute top-[calc(100%+8px)] left-0 min-w-[200px] bg-[#02173e] border border-white/10 rounded-xl overflow-hidden opacity-0 invisible translate-y-[-8px] group-hover/item:opacity-100 group-hover/item:visible group-hover/item:translate-y-0 transition-all duration-200 shadow-[0_10px_40px_rgba(0,0,0,0.4)] z-50 list-none">
+                    {item.children.map((child) => (
+                      <li key={child.label}>
+                        <Link
+                          to={child.href}
+                          className="block px-[18px] py-[10px] text-[13px] font-[500] text-white/80 hover:text-white hover:bg-[#ff9000]/20 hover:pl-6 border-b border-white/5 last:border-none transition-all"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+            <li className="ml-2">
+              <Link
+                to="#"
+                className="bg-[#ff9000] text-white px-[18px] py-[9px] rounded-lg text-[13px] font-[700] shadow-[0_4px_12px_rgba(255,144,0,0.3)] hover:bg-[#e68000] hover:-translate-y-[1px] hover:shadow-[0_6px_20px_rgba(255,144,0,0.4)] transition-all inline-block"
+              >
+                Đăng ký tư vấn
+              </Link>
+            </li>
+          </ul>
         </nav>
 
-        {/* Actions */}
-        <div className="hidden lg:flex items-center gap-6">
-          <div className="relative group">
-            <input 
-              type="text" 
-              placeholder="Tìm khóa học..." 
-              className="pl-10 pr-4 py-2 bg-gray-50 border-none rounded-full text-sm w-48 focus:w-64 focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
-            />
-            <Search className="absolute left-3 top-2.5 text-gray-400" size={16} />
-          </div>
-          <button className="text-gray-600 hover:text-indigo-600 relative">
-            <ShoppingCart size={22} />
-            <span className="absolute -top-2 -right-2 bg-indigo-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-          </button>
-          <Link to="/login" className="bg-gray-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-indigo-600 transition-colors">
-            Vào học
-          </Link>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button className="lg:hidden p-2 text-gray-600" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        {/* Mobile Hamburger */}
+        <button
+          className="lg:hidden flex flex-col gap-[5px] p-2 focus:outline-none z-50"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span className={`block w-6 h-[2px] bg-white rounded-full transition-all duration-300 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
+          <span className={`block w-6 h-[2px] bg-white rounded-full transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block w-6 h-[2px] bg-white rounded-full transition-all duration-300 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b shadow-xl p-6 flex flex-col gap-4 animate-in slide-in-from-top">
-          {menuItems.map((item) => (
-            <Link key={item.path} to={item.path} onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-gray-800 border-b border-gray-50 pb-2">
-              {item.name}
-            </Link>
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 bg-[#02173e] transition-all duration-300 lg:hidden overflow-y-auto pt-24 px-6
+        ${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+      >
+        <ul className="flex flex-col gap-1 list-none pb-10">
+          {navItems.map((item) => (
+            <li key={item.label} className="border-b border-white/10 last:border-none">
+              <Link to={item.href} className="block py-4 text-sm font-[600] text-white/90 uppercase hover:text-[#ff9000]">
+                {item.label}
+              </Link>
+              {item.children && (
+                <ul className="pl-4 pb-2 list-none">
+                  {item.children.map((child) => (
+                    <li key={child.label}>
+                      <Link to={child.href} className="block py-2 text-[13px] text-white/60 hover:text-white">
+                        {child.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
           ))}
-          <button className="bg-indigo-600 text-white py-4 rounded-xl font-bold">Đăng ký ngay</button>
-        </div>
-      )}
+          <li className="mt-4">
+            <Link to="#" className="block w-full bg-[#ff9000] text-white text-center py-4 rounded-lg font-[700] uppercase text-sm">
+              Đăng ký tư vấn
+            </Link>
+          </li>
+        </ul>
+      </div>
     </header>
   );
-};
-
-export default Header1;
+}

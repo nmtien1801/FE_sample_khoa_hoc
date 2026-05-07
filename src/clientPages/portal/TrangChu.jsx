@@ -5,7 +5,7 @@ import { Card } from "../../components/common";
 const samples = [
     {
         id: "layout1",
-        title: "Mẫu Dạy học Online 1",
+        title: "Mẫu Khóa học kinh doanh",
         description: "Nền tảng học trực tuyến với giao diện hiện đại, quản lý khóa học và bài giảng.",
         image: "/sample/Dạy học online 1.png",
         path: "/layout1",
