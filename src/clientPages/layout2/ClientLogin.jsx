@@ -25,13 +25,15 @@ const ClientLogin = () => {
             // Giả lập đăng nhập thành công
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userEmail', formData.email);
-            navigate('/layout1/lessons');
+            localStorage.setItem('layout2_purchasedCourses', JSON.stringify([1, 2]));
+            window.dispatchEvent(new Event('layout2AuthUpdate'));
+            navigate('/layout2/my-courses');
             setIsLoading(false);
         }, 1500);
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex items-center justify-center px-4 pt-28">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex items-center justify-center px-4 ">
             <div className="max-w-md w-full space-y-8">
                 {/* Header */}
                 <div className="text-center">

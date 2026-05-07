@@ -8,6 +8,9 @@ import Layout2CourseDetail from "../clientPages/layout2/CourseDetail.jsx";
 import Layout2Cart from "../clientPages/layout2/Cart.jsx";
 import Layout2TinTuc from "../clientPages/layout2/TinTuc.jsx";
 import Layout2LienHe from "../clientPages/layout2/LienHe.jsx";
+import Layout2ClientLogin from "../clientPages/layout2/ClientLogin.jsx";
+import Layout2MyCourses from "../clientPages/layout2/MyCourses.jsx";
+import Layout2MyCourseDetail from "../clientPages/layout2/MyCourseDetail.jsx";
 
 import Header1 from "../clientPages/layout1/header.jsx";
 import Footer1 from "../clientPages/layout1/footer.jsx";
@@ -49,6 +52,9 @@ function AppRouter() {
                     <Route path="courses" element={<Layout2Courses />} />
                     <Route path="courses/:id" element={<Layout2CourseDetail />} />
                     <Route path="cart" element={<Layout2Cart />} />
+                    <Route path="login" element={<Layout2ClientLogin />} />
+                    <Route path="my-courses" element={<Layout2MyCourses />} />
+                    <Route path="my-courses/:id" element={<Layout2MyCourseDetail />} />
                     <Route path="tin-tuc" element={<Layout2TinTuc />} />
                     <Route path="lien-he" element={<Layout2LienHe />} />
                 </Route>

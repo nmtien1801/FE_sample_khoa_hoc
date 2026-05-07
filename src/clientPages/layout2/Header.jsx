@@ -37,6 +37,7 @@ export default function Header() {
   const [mobileDropOpen, setMobileDropOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [cartCount, setCartCount] = useState(getCartCount());
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
   const menuRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,6 +51,23 @@ export default function Header() {
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  useEffect(() => {
+    const updateCart = () => setCartCount(getCartCount());
+    const updateAuth = () => setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+
+    window.addEventListener("layout2CartUpdate", updateCart);
+    window.addEventListener("storage", updateCart);
+    window.addEventListener("layout2AuthUpdate", updateAuth);
+    window.addEventListener("storage", updateAuth);
+
+    return () => {
+      window.removeEventListener("layout2CartUpdate", updateCart);
+      window.removeEventListener("layout2AuthUpdate", updateAuth);
+      window.removeEventListener("storage", updateCart);
+      window.removeEventListener("storage", updateAuth);
+    };
   }, []);
 
   useEffect(() => {
@@ -181,12 +199,12 @@ export default function Header() {
           <div className="h-6 w-px bg-gray-200 mx-2" />
 
           {/* Tài khoản */}
-          <a
-            href="/layout2"
+          <Link
+            to={isLoggedIn ? "/layout2/my-courses" : "/layout2/login"}
             className="ml-1 bg-[#00bc86] hover:bg-[#00a874] active:scale-95 text-white text-sm font-bold px-5 py-2.5 rounded-full transition-all shadow-sm hover:shadow-md"
           >
             Tài khoản
-          </a>
+          </Link>
         </div>
 
         {/* Mobile right */}
@@ -259,9 +277,9 @@ export default function Header() {
               )
             )}
             <div className="pt-4 flex gap-3">
-              <a href="/dashboard" className="flex-1 text-center bg-[#00bc86] hover:bg-[#00a874] text-white text-sm font-bold py-3 rounded-full transition-colors">
+              <Link to={isLoggedIn ? "/layout2/my-courses" : "/layout2/login"} className="flex-1 text-center bg-[#00bc86] hover:bg-[#00a874] text-white text-sm font-bold py-3 rounded-full transition-colors">
                 Tài khoản
-              </a>
+              </Link>
               <a href="/bai-viet/tin-tuc" className="flex-1 text-center border-2 border-gray-200 text-sm font-semibold text-gray-600 py-3 rounded-full hover:border-[#00bc86] hover:text-[#00bc86] transition-colors">
                 Blog
               </a>
