@@ -18,6 +18,8 @@ import Layout1GioiThieu from "../clientPages/layout1/GioiThieu.jsx";
 import Layout1KhoaHoc from "../clientPages/layout1/KhoaHoc.jsx";
 import Layout1LienHe from "../clientPages/layout1/LienHe.jsx";
 import Layout1TinTuc from "../clientPages/layout1/TinTuc.jsx";
+import Layout1KienThuc from "../clientPages/layout1/KienThuc.jsx";
+import Layout1BaiViet from "../clientPages/layout1/BaiViet.jsx";
 
 function AppRouter() {
     return (
@@ -28,6 +30,9 @@ function AppRouter() {
                     <Route index element={<Layout1TrangChu />} />
                     <Route path="gioi-thieu" element={<Layout1GioiThieu />} />
                     <Route path="khoa-hoc" element={<Layout1KhoaHoc />} />
+                    <Route path="kien-thuc" element={<Layout1KienThuc />} />
+                    <Route path="kien-thuc/:topic" element={<Layout1KienThuc />} />
+                    <Route path="bai-viet" element={<Layout1BaiViet />} />
                     <Route path="lien-he" element={<Layout1LienHe />} />
                     <Route path="tin-tuc" element={<Layout1TinTuc />} />
                 </Route>

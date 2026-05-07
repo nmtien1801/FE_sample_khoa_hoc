@@ -2,22 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const navItems = [
-  { label: "Trang chủ", href: "" },
-  { label: "Giới thiệu", href: "gioi-thieu" },
+  { label: "Trang chủ", href: "/layout1" },
+  { label: "Giới thiệu", href: "/layout1/gioi-thieu" },
   {
     label: "Kiến thức KDOL",
-    href: "#",
+    href: "/layout1/kien-thuc",
     children: [
-      { label: "Khởi nghiệp", href: "khởi-nghiệp" },
-      { label: "Tiktok", href: "tiktok" },
-      { label: "Youtube", href: "youtube" },
-      { label: "Facebook", href: "facebook" },
-      { label: "Website", href: "website" },
+      { label: "Khởi nghiệp", href: "/layout1/kien-thuc/khoi-nghiep" },
+      { label: "Tiktok", href: "/layout1/kien-thuc/tiktok" },
+      { label: "Youtube", href: "/layout1/kien-thuc/youtube" },
+      { label: "Facebook", href: "/layout1/kien-thuc/facebook" },
+      { label: "Website", href: "/layout1/kien-thuc/website" },
     ],
   },
-  { label: "Tin tức KDOL", href: "tin-tuc" },
-  { label: "Bài viết chia sẻ", href: "bai-viet" },
-  { label: "Liên hệ", href: "lien-he" },
+  { label: "Tin tức KDOL", href: "/layout1/tin-tuc" },
+  { label: "Bài viết chia sẻ", href: "/layout1/bai-viet" },
+  { label: "Liên hệ", href: "/layout1/lien-he" },
 ];
 
 export default function Header() {
