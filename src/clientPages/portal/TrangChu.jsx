@@ -6,14 +6,14 @@ const samples = [
     {
         id: "layout1",
         title: "Mẫu Khóa học kinh doanh",
-        description: "Nền tảng học trực tuyến với giao diện hiện đại, quản lý khóa học và bài giảng.",
+        description: "TẬP TRUNG VÀO 1 KHÓA HỌC duy nhất, phù hợp cho những ai muốn xây dựng thương hiệu cá nhân và bán 1 khóa học chuyên sâu.",
         image: "/sample/Dạy học online 1.png",
         path: "/layout1",
     },
     {
         id: "layout2",
-        title: "Mẫu Dạy học Online 2",
-        description: "Giao diện bán khóa học đa dạng, phù hợp không chỉ cho 1 khóa mà cho cả hệ thống học online.",
+        title: "Mẫu Khóa học tổng hợp",
+        description: "GỒM NHIỀU KHÓA HỌC, phù hợp cho những ai muốn xây dựng hệ thống nhiều khóa học và phát triển thương hiệu trung tâm đào tạo online.",
         image: "/sample/Dạy học online 2.png",
         path: "/layout2",
     },

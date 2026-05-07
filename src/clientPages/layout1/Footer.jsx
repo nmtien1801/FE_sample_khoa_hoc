@@ -84,17 +84,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      {/* Back to Top Button */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-8 right-8 w-11 h-11 bg-[#ff9000] rounded-full flex items-center justify-center text-white shadow-2xl shadow-orange-500/20 hover:bg-orange-600 hover:-translate-y-1 transition-all z-[100]"
-        aria-label="Back to Top"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-        </svg>
-      </button>
     </footer>
   );
 };

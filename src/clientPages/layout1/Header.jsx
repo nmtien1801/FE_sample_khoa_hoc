@@ -39,7 +39,7 @@ export default function Header() {
       <div className="max-w-[1270px] w-full mx-auto px-6 flex items-center justify-between">
 
         {/* Logo */}
-        <Link to="#" className="flex items-center gap-[10px] group">
+        <Link to="/" className="flex items-center gap-[10px] group">
           <div className="w-[42px] h-[42px] bg-[#ff9000] rounded-[10px] flex items-center justify-center text-xl font-[800] text-white shrink-0 shadow-lg group-hover:scale-105 transition-transform">
             K
           </div>
