@@ -20,6 +20,9 @@ import Layout1LienHe from "../clientPages/layout1/LienHe.jsx";
 import Layout1TinTuc from "../clientPages/layout1/TinTuc.jsx";
 import Layout1KienThuc from "../clientPages/layout1/KienThuc.jsx";
 import Layout1BaiViet from "../clientPages/layout1/BaiViet.jsx";
+import Layout1ClientLogin from "../clientPages/layout1/ClientLogin.jsx";
+import Layout1LessonsList from "../clientPages/layout1/LessonsList.jsx";
+import Layout1LessonDetail from "../clientPages/layout1/LessonDetail.jsx";
 
 function AppRouter() {
     return (
@@ -35,6 +38,9 @@ function AppRouter() {
                     <Route path="bai-viet" element={<Layout1BaiViet />} />
                     <Route path="lien-he" element={<Layout1LienHe />} />
                     <Route path="tin-tuc" element={<Layout1TinTuc />} />
+                    <Route path="login" element={<Layout1ClientLogin />} />
+                    <Route path="lessons" element={<Layout1LessonsList />} />
+                    <Route path="lessons/:id" element={<Layout1LessonDetail />} />
                 </Route>
                 <Route path="/layout2" element={<ClientLayout header={Header} footer={Footer} />}>
                     <Route index element={<Layout2TrangChu />} />

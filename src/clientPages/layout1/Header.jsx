@@ -91,6 +91,14 @@ export default function Header() {
                 Đăng ký tư vấn
               </Link>
             </li>
+            <li className="ml-2">
+              <Link
+                to="/layout1/login"
+                className="bg-[#ff9000] text-white px-[18px] py-[9px] rounded-lg text-[13px] font-[700] shadow-[0_4px_12px_rgba(255,144,0,0.3)] hover:bg-[#e68000] hover:-translate-y-[1px] hover:shadow-[0_6px_20px_rgba(255,144,0,0.4)] transition-all inline-block"
+              >
+                Đăng nhập
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -132,6 +140,11 @@ export default function Header() {
           <li className="mt-4">
             <Link to="#" className="block w-full bg-[#ff9000] text-white text-center py-4 rounded-lg font-[700] uppercase text-sm">
               Đăng ký tư vấn
+            </Link>
+          </li>
+          <li className="mt-4">
+            <Link to="/layout1/login" className="block w-full bg-[#ff9000] text-white text-center py-4 rounded-lg font-[700] uppercase text-sm">
+              Đăng nhập
             </Link>
           </li>
         </ul>
