@@ -136,7 +136,7 @@ export default function BlogArchive() {
     const otherPosts = posts.slice(1);
 
     return (
-        <div className="max-w-[1270px] mx-auto px-4 py-8 pt-28 font-sans">
+        <div className="max-w-[1270px] mx-auto px-4 py-8 font-sans">
             <div className="flex gap-7">
 
                 {/* Main content */}
@@ -167,7 +167,7 @@ export default function BlogArchive() {
 
                     {/* Recent posts */}
                     <div className="mb-6">
-                        <div className="bg-orange-500 text-white px-3 py-2 rounded-t-lg font-semibold text-[15px]">
+                        <div className="bg-[#00bc86] text-white px-3 py-2 rounded-t-lg font-semibold text-[15px]">
                             Bài viết mới nhất
                         </div>
                         <div className="border border-t-0 border-gray-200 rounded-b-lg divide-y divide-gray-100">
@@ -188,7 +188,7 @@ export default function BlogArchive() {
 
                     {/* Top viewed */}
                     <div>
-                        <div className="bg-orange-500 text-white px-3 py-2 rounded-t-lg font-semibold text-[15px]">
+                        <div className="bg-[#00bc86] text-white px-3 py-2 rounded-t-lg font-semibold text-[15px]">
                             Bài xem nhiều nhất
                         </div>
                         <div className="border border-t-0 border-gray-200 rounded-b-lg">
