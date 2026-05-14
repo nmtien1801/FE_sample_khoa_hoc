@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ApiTeacher from "../apis/ApiTeacher.js";
 
-// Async thunk for fetching teachers - chỉ dùng cho redux
+// Async thunk for fetching teachers
 export const getListTeacher = createAsyncThunk(
   "teacher/getListTeacher",
   async (params, { rejectWithValue }) => {
@@ -14,7 +14,7 @@ export const getListTeacher = createAsyncThunk(
   },
 );
 
-// Async thunk for fetching single teacher - chỉ dùng cho redux
+// Async thunk for fetching single teacher
 export const getTeacherById = createAsyncThunk(
   "teacher/getTeacherById",
   async (id, { rejectWithValue }) => {
@@ -76,10 +76,8 @@ const teacherSlice = createSlice({
   },
 });
 
+// Xuất các action để sử dụng trong Component (như clear lỗi)
 export const { clearError, clearCurrentTeacher } = teacherSlice.actions;
-      });
-  },
-});
 
-export const { clearError } = teacherSlice.actions;
+// Xuất reducer để đăng ký vào Store (index.js của redux)
 export default teacherSlice.reducer;

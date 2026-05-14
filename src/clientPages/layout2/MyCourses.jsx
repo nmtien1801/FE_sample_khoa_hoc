@@ -1,6 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { courses } from "./courseData";
+import { useSelector, useDispatch } from "react-redux";
+import { getListCourse } from "../../redux/courseSlice";
 
 const STORAGE_KEY = "layout2_purchasedCourses";
 
@@ -13,7 +15,14 @@ function getPurchasedCourseIds() {
 }
 
 export default function MyCourses() {
+    const dispatch = useDispatch();
+    // const { CourseList } = useSelector((state) => state.course);
     const purchasedIds = getPurchasedCourseIds();
+
+    // useEffect(() => {
+    //     dispatch(getListCourse());
+    // }, []);
+
     const purchasedCourses = useMemo(
         () => courses.filter((course) => purchasedIds.includes(course.id)),
         [purchasedIds]

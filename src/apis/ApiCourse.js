@@ -2,13 +2,13 @@ import ApiManager from "./ApiManager.js";
 
 const courseApi = {
   // Chỉ dùng cho redux - lấy data
-  getAll: (params = {}) => ApiManager.get("/api/v1/courses", { params }),
-  getById: (id) => ApiManager.get(`/api/v1/courses/${id}`),
+  getAll: (params = {}) => ApiManager.get("/courses", { params }),
+  getById: (id) => ApiManager.get(`/courses/${id}`),
 
   // CRUD trực tiếp - không qua redux
-  create: (data) => ApiManager.post("/api/v1/courses", data),
-  update: (id, data) => ApiManager.put(`/api/v1/courses/${id}`, data),
-  delete: (id) => ApiManager.delete(`/api/v1/courses/${id}`),
+  create: (data) => ApiManager.post("/courses", data),
+  update: (id, data) => ApiManager.put(`/courses/${id}`, data),
+  delete: (id) => ApiManager.delete(`/courses/${id}`),
 };
 
 export default courseApi;

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ApiCategory from "../apis/ApiCategory.js";
 
-// Async thunk for fetching categories - chỉ dùng cho redux
+// Async thunk for fetching categories
 export const getListCategory = createAsyncThunk(
   "category/getListCategory",
   async (params, { rejectWithValue }) => {
@@ -14,7 +14,7 @@ export const getListCategory = createAsyncThunk(
   },
 );
 
-// Async thunk for fetching single category - chỉ dùng cho redux
+// Async thunk for fetching single category
 export const getCategoryById = createAsyncThunk(
   "category/getCategoryById",
   async (id, { rejectWithValue }) => {
@@ -76,10 +76,8 @@ const categorySlice = createSlice({
   },
 });
 
+// Xuất các actions từ reducers
 export const { clearError, clearCurrentCategory } = categorySlice.actions;
-      });
-  },
-});
 
-export const { clearError } = categorySlice.actions;
+// Xuất reducer để nhúng vào store
 export default categorySlice.reducer;
