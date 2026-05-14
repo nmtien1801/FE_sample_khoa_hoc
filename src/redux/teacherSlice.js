@@ -1,73 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import ApiTeacher from "../apis/ApiTeacher.js";
 
-// Async thunk for fetching teachers
+// Async thunk for fetching teachers - chỉ dùng cho redux
 export const getListTeacher = createAsyncThunk(
   "teacher/getListTeacher",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/api/v1/teachers",
-        {
-          params: params,
-        },
-      );
-      return response.data;
+      const response = await ApiTeacher.getAll(params);
+      return response;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data || "Failed to fetch teachers",
-      );
+      return rejectWithValue(error.message || "Failed to fetch teachers");
     }
   },
 );
 
-// Async thunk for creating a teacher
-export const createTeacher = createAsyncThunk(
-  "teacher/createTeacher",
-  async (teacherData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/teachers",
-        teacherData,
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data || "Failed to create teacher",
-      );
-    }
-  },
-);
-
-// Async thunk for updating a teacher
-export const updateTeacher = createAsyncThunk(
-  "teacher/updateTeacher",
-  async ({ id, teacherData }, { rejectWithValue }) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:8080/api/v1/teachers/${id}`,
-        teacherData,
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data || "Failed to update teacher",
-      );
-    }
-  },
-);
-
-// Async thunk for deleting a teacher
-export const deleteTeacher = createAsyncThunk(
-  "teacher/deleteTeacher",
+// Async thunk for fetching single teacher - chỉ dùng cho redux
+export const getTeacherById = createAsyncThunk(
+  "teacher/getTeacherById",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:8080/api/v1/teachers/${id}`);
-      return id;
+      const response = await ApiTeacher.getById(id);
+      return response;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data || "Failed to delete teacher",
-      );
+      return rejectWithValue(error.message || "Failed to fetch teacher");
     }
   },
 );
@@ -77,12 +32,16 @@ const teacherSlice = createSlice({
   initialState: {
     TeacherList: [],
     TeacherTotal: 0,
+    currentTeacher: null,
     loading: false,
     error: null,
   },
   reducers: {
     clearError: (state) => {
       state.error = null;
+    },
+    clearCurrentTeacher: (state) => {
+      state.currentTeacher = null;
     },
   },
   extraReducers: (builder) => {
@@ -101,53 +60,23 @@ const teacherSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // createTeacher
-      .addCase(createTeacher.pending, (state) => {
+      // getTeacherById
+      .addCase(getTeacherById.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(createTeacher.fulfilled, (state, action) => {
+      .addCase(getTeacherById.fulfilled, (state, action) => {
         state.loading = false;
-        state.TeacherList.push(action.payload.data);
-        state.TeacherTotal += 1;
+        state.currentTeacher = action.payload.data;
       })
-      .addCase(createTeacher.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      // updateTeacher
-      .addCase(updateTeacher.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(updateTeacher.fulfilled, (state, action) => {
-        state.loading = false;
-        const index = state.TeacherList.findIndex(
-          (teacher) => teacher.id === action.payload.data.id,
-        );
-        if (index !== -1) {
-          state.TeacherList[index] = action.payload.data;
-        }
-      })
-      .addCase(updateTeacher.rejected, (state, action) => {
+      .addCase(getTeacherById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
-      // deleteTeacher
-      .addCase(deleteTeacher.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(deleteTeacher.fulfilled, (state, action) => {
-        state.loading = false;
-        state.TeacherList = state.TeacherList.filter(
-          (teacher) => teacher.id !== action.payload,
-        );
-        state.TeacherTotal -= 1;
-      })
-      .addCase(deleteTeacher.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+      });
+  },
+});
+
+export const { clearError, clearCurrentTeacher } = teacherSlice.actions;
       });
   },
 });
