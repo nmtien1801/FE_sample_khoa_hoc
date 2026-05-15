@@ -1,141 +1,127 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Login } from '../../redux/authSlice';
+import { toast } from 'react-toastify';
 
-const ClientLogin = () => {
+const LoginForm = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+    const dispatch = useDispatch();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
 
-        // Mock login - trong thực tế sẽ gọi API
-        setTimeout(() => {
-            // Giả lập đăng nhập thành công
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userEmail', formData.email);
-            localStorage.setItem('layout2_purchasedCourses', JSON.stringify([1, 2]));
-            window.dispatchEvent(new Event('layout2AuthUpdate'));
-            navigate('/layout2/my-courses');
-            setIsLoading(false);
-        }, 1500);
+        let body = {
+            username,
+            password,
+        };
+        if (username && password) {
+            let res = await dispatch(Login(body));
+            
+            if (res && res.payload && res.payload.EC === 0) {
+                navigate('/profile/info');
+            }else{
+                toast.error(res.payload.EM);
+            }
+        } else {
+            toast.error('Vui lòng điền đầy đủ thông tin đăng nhập');
+        }
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex items-center justify-center px-4 ">
-            <div className="max-w-md w-full space-y-8">
-                {/* Header */}
-                <div className="text-center">
-                    <div className="mx-auto w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                        <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
+        <div className="flex items-center justify-center min-h-screen bg-white">
+            <div className="w-full max-w-xs sm:max-w-[360px] bg-white p-4 sm:p-0 text-center">
+
+                {/* Phần Logo và Tiêu đề */}
+                <div className="mb-6">
+                    <div className="mx-auto w-32 h-32 mb-4">
+                        <img src="/logo.png" alt="HCA Logo" className="w-full h-full object-contain" />
                     </div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Đăng nhập</h2>
-                    <p className="text-gray-600">Truy cập kho bài giảng KDOL Academy</p>
+
+                    <div className="flex items-center justify-center space-x-3 mb-6">
+                        <div className="flex-grow border-t border-gray-300 max-w-[40px]"></div>
+                        <h1 className="text-xl text-gray-700 font-light tracking-wide">Đăng nhập</h1>
+                        <div className="flex-grow border-t border-gray-300 max-w-[40px]"></div>
+                    </div>
                 </div>
 
-                {/* Form */}
-                <div className="bg-white rounded-2xl shadow-xl p-8">
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                                Email
-                            </label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                required
-                                value={formData.email}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
-                                placeholder="Nhập email của bạn"
-                            />
-                        </div>
+                {/* --- Form Đăng nhập --- */}
+                <form onSubmit={handleSubmit}>
 
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                                Mật khẩu
-                            </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                value={formData.password}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
-                                placeholder="Nhập mật khẩu"
-                            />
-                        </div>
+                    {/* Trường Username */}
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            placeholder="Email or phone"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:border-gray-500 placeholder-gray-500 text-sm"
+                            required
+                            // 3. Kết nối trạng thái và sự kiện onChange
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
 
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
-                                    id="remember-me"
-                                    name="remember-me"
-                                    type="checkbox"
-                                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
-                                />
-                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                                    Ghi nhớ đăng nhập
-                                </label>
-                            </div>
-                            <a href="#" className="text-sm text-orange-600 hover:text-orange-500 font-medium">
-                                Quên mật khẩu?
-                            </a>
-                        </div>
+                    {/* Trường Password */}
+                    <div className="mb-6">
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:border-gray-500 placeholder-gray-500 text-sm"
+                            required
+                            // 3. Kết nối trạng thái và sự kiện onChange
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
 
+                    {/* Nhóm Nút bấm */}
+                    <div className="flex justify-center space-x-2">
                         <button
-                            type="submit"
-                            disabled={isLoading}
-                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                            type="submit" // Nút này sẽ kích hoạt handleSubmit
+                            className="w-[90px] py-2 text-sm text-black border border-gray-300 bg-white hover:bg-gray-50 transition duration-150 rounded-sm"
                         >
-                            {isLoading ? (
-                                <div className="flex items-center justify-center">
-                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    Đang đăng nhập...
-                                </div>
-                            ) : (
-                                'Đăng nhập'
-                            )}
+                            Đăng nhập
                         </button>
-                    </form>
-
-                    <div className="mt-6 text-center">
-                        <p className="text-sm text-gray-600">
-                            Chưa có tài khoản?{' '}
-                            <a href="#" className="font-medium text-orange-600 hover:text-orange-500">
-                                Đăng ký ngay
-                            </a>
-                        </p>
+                        <button
+                            type="button"
+                            className="w-[90px] py-2 text-sm text-black border border-gray-300 bg-white hover:bg-gray-50 transition duration-150 rounded-sm"
+                            onClick={() => navigate('/register')}
+                        >
+                            Đăng ký
+                        </button>
+                        <button
+                            type="button"
+                            className="w-[70px] py-2 text-sm text-black border border-gray-300 bg-white hover:bg-gray-50 transition duration-150 rounded-sm"
+                            // Tùy chọn: Thêm sự kiện onClick để điều hướng quay lại
+                            onClick={() => console.log('Quay lại trang trước')}
+                        >
+                            Quay lại
+                        </button>
                     </div>
-                </div>
 
-                {/* Demo credentials */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
-                    <p className="font-semibold mb-2">Tài khoản demo:</p>
-                    <p>Email: demo@gmail.com</p>
-                    <p>Mật khẩu: 1234</p>
+                    {/* Quên mật khẩu */}
+                    <div className="text-right text-sm mt-3 mb-6 pr-1">
+                        <a href="#" className="text-blue-500 hover:text-blue-700">
+                            Lost your password?
+                        </a>
+                    </div>
+                </form>
+
+                {/* Đường kẻ phân cách footer */}
+                <div className="w-full border-t border-gray-300 mt-8 mb-4"></div>
+
+                {/* Phần Footer */}
+                <div className="text-center">
+                    <h2 className="text-lg text-gray-600 font-light tracking-widest mb-1">CMICSTUDIO</h2>
+                    <p className="text-xs text-gray-500">
+                        &copy;{new Date().getFullYear()} All Rights Reserved. Privacy and Terms
+                    </p>
                 </div>
             </div>
         </div>
     );
 };
 
-export default ClientLogin;
+export default LoginForm;

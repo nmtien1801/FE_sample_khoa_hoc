@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 
 const menuItems = [
   { label: "Trang chủ", href: "/layout2" },
@@ -31,17 +32,25 @@ function getCartCount() {
 }
 
 export default function Header() {
+  const dispatch = useDispatch();
+  
+  // 1. Lấy userInfo từ Redux Store
+  // Trạng thái đăng nhập phụ thuộc vào userInfo có tồn tại hay không
+  const { userInfo } = useSelector(state => state.auth);
+  const isLoggedIn = !!userInfo.id; 
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeChild, setActiveChild] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropOpen, setMobileDropOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [cartCount, setCartCount] = useState(getCartCount());
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
+
   const menuRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Xử lý click ngoài để đóng menu danh mục
   useEffect(() => {
     const handler = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -53,30 +62,15 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // Theo dõi cập nhật giỏ hàng từ LocalStorage
   useEffect(() => {
     const updateCart = () => setCartCount(getCartCount());
-    const updateAuth = () => setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
-
     window.addEventListener("layout2CartUpdate", updateCart);
     window.addEventListener("storage", updateCart);
-    window.addEventListener("layout2AuthUpdate", updateAuth);
-    window.addEventListener("storage", updateAuth);
 
     return () => {
       window.removeEventListener("layout2CartUpdate", updateCart);
-      window.removeEventListener("layout2AuthUpdate", updateAuth);
       window.removeEventListener("storage", updateCart);
-      window.removeEventListener("storage", updateAuth);
-    };
-  }, []);
-
-  useEffect(() => {
-    const syncCartCount = () => setCartCount(getCartCount());
-    window.addEventListener("layout2CartUpdate", syncCartCount);
-    window.addEventListener("storage", syncCartCount);
-    return () => {
-      window.removeEventListener("layout2CartUpdate", syncCartCount);
-      window.removeEventListener("storage", syncCartCount);
     };
   }, []);
 
@@ -85,15 +79,14 @@ export default function Header() {
       <div className="max-w-[1190px] mx-auto px-4 h-[70px] flex items-center gap-3">
 
         {/* Logo */}
-        <a href="/" className="shrink-0 flex items-center gap-2">
+        <Link to="/layout2" className="shrink-0 flex items-center gap-2">
           <img
             src="https://khoahocvip.themevip.vip/wp-content/uploads/2025/02/logotvip-1024x154.png"
             alt="ThemeVip"
             className="h-9 w-auto object-contain"
           />
-        </a>
+        </Link>
 
-        {/* Divider */}
         <div className="hidden lg:block h-8 w-px bg-gray-200 shrink-0 mx-1" />
 
         {/* Danh mục mega-menu */}
@@ -111,18 +104,16 @@ export default function Header() {
             <span className="text-[#00bc86] font-bold text-sm">Danh mục</span>
           </button>
 
-          {/* Dropdown panel */}
           {menuOpen && (
-            <div className="absolute top-[calc(100%+8px)] left-0 flex shadow-2xl rounded-2xl overflow-hidden border border-gray-100 z-50">
-              {/* Column 1: menu list */}
-              <div className="w-56 bg-white py-2">
+            <div className="absolute top-[calc(100%+8px)] left-0 flex shadow-2xl rounded-2xl overflow-hidden border border-gray-100 z-50 bg-white">
+              <div className="w-56 py-2">
                 {menuItems.map((item) => (
                   <div
                     key={item.label}
                     onMouseEnter={() => item.children ? setActiveChild(item) : setActiveChild(null)}
                   >
-                    <a
-                      href={item.href}
+                    <Link
+                      to={item.href}
                       className={`flex items-center justify-between px-5 py-3 text-sm transition-colors
                         ${item.highlight ? "text-[#f76758] font-bold" : "text-gray-700 font-medium"}
                         ${activeChild?.label === item.label ? "bg-gray-50" : "hover:bg-gray-50"}
@@ -134,22 +125,21 @@ export default function Header() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       )}
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </div>
 
-              {/* Column 2: sub-items */}
               {activeChild?.children && (
                 <div className="w-56 bg-white py-2 border-l border-gray-100">
                   {activeChild.children.map((child) => (
-                    <a
+                    <Link
                       key={child.label}
-                      href={child.href}
+                      to={child.href}
                       className="block px-5 py-3 text-sm text-gray-700 font-medium hover:bg-gray-50 hover:text-[#00bc86] transition-colors"
                     >
                       {child.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
@@ -159,24 +149,17 @@ export default function Header() {
 
         {/* Search */}
         <form
-          action="/"
-          method="get"
+          onSubmit={(e) => { e.preventDefault(); navigate(`/layout2/courses?s=${search}`); }}
           className="hidden lg:flex flex-1 items-center bg-gray-100 rounded-full px-5 py-2.5 gap-2"
         >
           <input
             type="search"
-            name="s"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Tìm kiếm khóa học"
             className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 focus:outline-none min-w-0"
           />
-          <input type="hidden" name="post_type" value="product" />
-          <button
-            type="submit"
-            aria-label="Tìm kiếm"
-            className="text-[#00bc86] hover:text-[#00a874] transition-colors shrink-0"
-          >
+          <button type="submit" className="text-[#00bc86] hover:text-[#00a874] transition-colors shrink-0">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
@@ -186,28 +169,27 @@ export default function Header() {
         {/* Right actions */}
         <div className="hidden lg:flex items-center gap-1 shrink-0">
           {/* Cart */}
-          <Link to="/layout2/cart" className="relative p-2.5 text-gray-500 hover:text-[#00bc86] transition-colors" aria-label="Giỏ hàng">
+          <Link to="/layout2/cart" className="relative p-2.5 text-gray-500 hover:text-[#00bc86] transition-colors">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            <span className="absolute top-1 right-1 bg-[#f76758] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center leading-none">
+            <span className="absolute top-1 right-1 bg-[#f76758] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">
               {cartCount}
             </span>
           </Link>
 
-          {/* Divider */}
           <div className="h-6 w-px bg-gray-200 mx-2" />
 
-          {/* Tài khoản */}
+          {/* Tài khoản - Dùng userInfo để quyết định Link */}
           <Link
             to={isLoggedIn ? "/layout2/my-courses" : "/layout2/login"}
             className="ml-1 bg-[#00bc86] hover:bg-[#00a874] active:scale-95 text-white text-sm font-bold px-5 py-2.5 rounded-full transition-all shadow-sm hover:shadow-md"
           >
-            Tài khoản
+            {isLoggedIn ? (userInfo.username || userInfo.name || "Tài khoản") : "Đăng nhập"}
           </Link>
         </div>
 
-        {/* Mobile right */}
+        {/* Mobile menu toggle */}
         <div className="flex lg:hidden items-center gap-1.5 ml-auto">
           <Link to="/layout2/cart" className="relative p-2 text-gray-500">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
@@ -218,7 +200,6 @@ export default function Header() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-2 text-gray-600"
-            aria-label="Menu"
           >
             {mobileOpen
               ? <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -232,13 +213,14 @@ export default function Header() {
       {mobileOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg">
           <div className="px-4 py-3">
-            <form action="/" method="get" className="flex items-center bg-gray-100 rounded-full px-4 py-2.5 gap-2">
+            <form onSubmit={(e) => { e.preventDefault(); navigate(`/layout2/courses?s=${search}`); }} className="flex items-center bg-gray-100 rounded-full px-4 py-2.5 gap-2">
               <input
-                type="search" name="s"
+                type="search"
                 placeholder="Tìm kiếm khóa học..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 focus:outline-none"
               />
-              <input type="hidden" name="post_type" value="product" />
               <button type="submit" className="text-[#00bc86]">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -263,26 +245,27 @@ export default function Header() {
                   {mobileDropOpen && (
                     <div className="pl-4 pb-1">
                       {item.children.map((child) => (
-                        <a key={child.label} href={child.href} className="block py-2.5 text-sm text-gray-600 hover:text-[#00bc86] border-b border-gray-50">
+                        <Link key={child.label} to={child.href} className="block py-2.5 text-sm text-gray-600 hover:text-[#00bc86] border-b border-gray-50" onClick={() => setMobileOpen(false)}>
                           {child.label}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   )}
                 </div>
               ) : (
-                <a key={item.label} href={item.href} className="block py-3 text-sm font-medium text-gray-700 hover:text-[#00bc86] border-b border-gray-100">
+                <Link key={item.label} to={item.href} className="block py-3 text-sm font-medium text-gray-700 hover:text-[#00bc86] border-b border-gray-100" onClick={() => setMobileOpen(false)}>
                   {item.label}
-                </a>
+                </Link>
               )
             )}
             <div className="pt-4 flex gap-3">
-              <Link to={isLoggedIn ? "/layout2/my-courses" : "/layout2/login"} className="flex-1 text-center bg-[#00bc86] hover:bg-[#00a874] text-white text-sm font-bold py-3 rounded-full transition-colors">
-                Tài khoản
+              <Link 
+                to={isLoggedIn ? "/layout2/my-courses" : "/layout2/login"} 
+                className="flex-1 text-center bg-[#00bc86] hover:bg-[#00a874] text-white text-sm font-bold py-3 rounded-full transition-colors"
+                onClick={() => setMobileOpen(false)}
+              >
+                {isLoggedIn ? "Khóa học của tôi" : "Đăng nhập"}
               </Link>
-              <a href="/bai-viet/tin-tuc" className="flex-1 text-center border-2 border-gray-200 text-sm font-semibold text-gray-600 py-3 rounded-full hover:border-[#00bc86] hover:text-[#00bc86] transition-colors">
-                Blog
-              </a>
             </div>
           </nav>
         </div>

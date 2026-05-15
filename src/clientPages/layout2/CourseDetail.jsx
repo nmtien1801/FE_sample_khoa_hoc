@@ -21,22 +21,23 @@ export default function CourseDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const course = useMemo(() => courses.find((item) => item.id === Number(id)), [id]);
+console.log('sssssssss ', course);
 
-    if (!course) {
-        return (
-            <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-                <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-                    <p className="text-lg font-semibold text-slate-900">Khóa học không tồn tại.</p>
-                    <button
-                        onClick={() => navigate("/layout2/courses")}
-                        className="mt-6 rounded-full bg-emerald-600 px-6 py-3 text-white font-semibold hover:bg-emerald-700 transition"
-                    >
-                        Quay về danh sách khóa học
-                    </button>
-                </div>
-            </div>
-        );
-    }
+    // if (!course) {
+    //     return (
+    //         <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+    //             <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+    //                 <p className="text-lg font-semibold text-slate-900">Khóa học không tồn tại.</p>
+    //                 <button
+    //                     onClick={() => navigate("/layout2/courses")}
+    //                     className="mt-6 rounded-full bg-emerald-600 px-6 py-3 text-white font-semibold hover:bg-emerald-700 transition"
+    //                 >
+    //                     Quay về danh sách khóa học
+    //                 </button>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     const handleAddToCart = () => {
         const cart = getCart();

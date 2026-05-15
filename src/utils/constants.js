@@ -2,6 +2,13 @@ import moment from "moment";
 import ApiUpload from "../apis/ApiUpload.js";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
+export const getProxyVideoUrl = (videoId) =>
+  `${BASE_URL}/video/proxy/${videoId}`;
+
+export const getVideoTokenUrl = () => `${BASE_URL}/video/token`;
+export const getVideoWatchUrl = (token) =>
+  `${BASE_URL}/video/watch/${token}`;
+
 const TypeUserIDCons = {
   client: "client",
   staff: "staff",

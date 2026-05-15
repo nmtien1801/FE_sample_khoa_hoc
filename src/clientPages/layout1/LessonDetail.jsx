@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { getProxyVideoUrl } from '../../utils/constants.js';
 
 const lessons = [
     {
@@ -384,7 +385,7 @@ const LessonDetail = () => {
                         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div className="aspect-video">
                                 <iframe
-                                    src={`https://www.youtube.com/embed/${lesson.videoId}?rel=0`}
+                                    src={getProxyVideoUrl(lesson.videoId)}
                                     title={lesson.title}
                                     className="w-full h-full"
                                     frameBorder="0"

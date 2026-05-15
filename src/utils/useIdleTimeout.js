@@ -6,13 +6,25 @@ const IDLE_TIMEOUT_MS = 10 * 60 * 1000; // 10 phút
 const CHECK_INTERVAL_MS = 60 * 1000; // Kiểm tra mỗi 1 phút
 const LAST_ACTIVITY_KEY = "lastActivityTime";
 
-// Hàm xử lý logout và xóa hết localStorage
+// Hàm xử lý logout: chỉ xóa các khoá liên quan auth, giữ lại dữ liệu cần thiết
 const performLogout = (dispatch) => {
+  // Giữ lại các khoá cần thiết (ví dụ: danh sách khoá học đã mua trên client)
+  const preserveKeys = ["layout2_purchasedCourses"];
+  const preserved = {};
+  preserveKeys.forEach((k) => {
+    preserved[k] = localStorage.getItem(k);
+  });
+
+  // Xóa localStorage toàn cục rồi khôi phục các khoá cần giữ
   localStorage.clear();
+  Object.keys(preserved).forEach((k) => {
+    if (preserved[k] !== null) localStorage.setItem(k, preserved[k]);
+  });
+
   dispatch(logout());
 
-  // Buộc chuyển hướng người dùng
-  window.location.href = "/";
+  // Chuyển hướng về trang login của layout2 thay vì root
+  window.location.href = "/layout2/login";
 };
 
 // Hàm cập nhật mốc thời gian hoạt động
@@ -38,7 +50,7 @@ export const useIdleTimeout = () => {
     // Nếu thời gian đã trôi qua lớn hơn 10 phút
     if (currentTime - lastTime > IDLE_TIMEOUT_MS) {
       console.log(
-        "[Idle Timeout] Phiên làm việc hết hạn sau 10 phút không hoạt động."
+        "[Idle Timeout] Phiên làm việc hết hạn sau 10 phút không hoạt động.",
       );
       clearInterval(intervalRef.current);
       performLogout(dispatch);
