@@ -22,7 +22,6 @@ export default function MyCourses() {
     const purchasedIds = getPurchasedCourseIds();
 
     useEffect(() => {
-        // Chỉ gọi API nếu danh sách đang trống để tối ưu hiệu năng
         if (CourseList.length === 0) {
             dispatch(getListCourse());
         }

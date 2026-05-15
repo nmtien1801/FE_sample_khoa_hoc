@@ -28,6 +28,10 @@ import Layout2ClientLogin from "../clientPages/layout2/ClientLogin.jsx";
 import Layout2MyCourses from "../clientPages/layout2/MyCourses.jsx";
 import Layout2MyCourseDetail from "../clientPages/layout2/MyCourseDetail.jsx";
 
+import AdminLayout from "../components/layout/AdminLayout.jsx";
+import CourseAdmin from "../adminPages/course/CourseAdmin.jsx";
+import LessonAdmin from "../adminPages/lession/LessonAdmin.jsx";
+
 function AppRouter() {
     return (
         <Router>
@@ -58,6 +62,25 @@ function AppRouter() {
                     <Route path="tin-tuc" element={<Layout2TinTuc />} />
                     <Route path="lien-he" element={<Layout2LienHe />} />
                 </Route>
+
+                {/* private route */}
+                <Route
+                    path="/admin"
+                    element={
+                        // <ProtectedRoute>
+                        <AdminLayout />
+                        // </ProtectedRoute>
+                    }
+                >
+                    {/* route course */}
+                    <Route path="courses" element={<CourseAdmin />} />
+                    <Route path="courses/:id" element={<CourseAdmin />} />
+
+                    {/* route lesson */}
+                    <Route path="lessons" element={<LessonAdmin />} />
+                    <Route path="lessons/:id" element={<LessonAdmin />} />
+                </Route>
+
                 <Route path="/*" element={<PortalPage />} />
             </Routes>
         </Router>
