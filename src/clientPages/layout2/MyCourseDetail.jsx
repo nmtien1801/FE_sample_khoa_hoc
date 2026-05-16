@@ -72,6 +72,7 @@ export default function MyCourseDetail() {
                 const response = await ApiManager.post("/video/token", {
                     lessonId: selectedLesson.id,
                 });
+
                 if (response?.DT?.token) {
                     setVideoToken(response.DT.token);
                 } else {

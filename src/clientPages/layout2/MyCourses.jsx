@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getListCourse } from "../../redux/courseSlice";
+import { getListCourseByUserId } from "../../redux/courseSlice";
 
 const STORAGE_KEY = "layout2_purchasedCourses";
 
@@ -16,14 +16,15 @@ function getPurchasedCourseIds() {
 
 export default function MyCourses() {
     const dispatch = useDispatch();
-
+    const { userInfo } = useSelector((state) => state.auth);
+    
     // Lấy CourseList và trạng thái loading từ redux
     const { CourseList, loading } = useSelector((state) => state.course);
     const purchasedIds = getPurchasedCourseIds();
 
     useEffect(() => {
         if (CourseList.length === 0) {
-            dispatch(getListCourse());
+            dispatch(getListCourseByUserId(userInfo.id));
         }
     }, [dispatch, CourseList.length]);
 

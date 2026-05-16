@@ -2,6 +2,18 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ApiCourse from "../apis/ApiCourse.js";
 
 // Async thunk for fetching courses - chỉ dùng cho redux
+export const getListCourseByUserId = createAsyncThunk(
+  "course/getListCourseByUserId",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await ApiCourse.getByUserId(userId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to fetch courses");
+    }
+  },
+);
+
 export const getListCourse = createAsyncThunk(
   "course/getListCourse",
   async (params, { rejectWithValue }) => {
@@ -46,6 +58,21 @@ const courseSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // getListCourseByUserId
+      .addCase(getListCourseByUserId.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getListCourseByUserId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.CourseList = action.payload.data || [];
+        state.CourseTotal = action.payload.total || 0;
+      })
+      .addCase(getListCourseByUserId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
       // getListCourse
       .addCase(getListCourse.pending, (state) => {
         state.loading = true;

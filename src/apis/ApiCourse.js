@@ -3,6 +3,7 @@ import ApiManager from "./ApiManager.js";
 const courseApi = {
   // Chỉ dùng cho redux - lấy data
   getAll: (params = {}) => ApiManager.get("/courses", { params }),
+  getByUserId: (userId) => ApiManager.get(`/courseByUser/${userId}`),
   getById: (id) => ApiManager.get(`/courses/${id}`),
 
   // CRUD trực tiếp - không qua redux
