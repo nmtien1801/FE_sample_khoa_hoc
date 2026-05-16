@@ -158,6 +158,8 @@ export default function MyCourseDetail() {
                                     className="h-full w-full"
                                     src={getVideoWatchUrl(videoToken)}
                                     allowFullScreen
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    sandbox="allow-scripts allow-same-origin allow-forms"
                                 />
                             ) : (
                                 <div className="h-full flex items-center justify-center text-white/20">Chọn bài học để bắt đầu</div>
@@ -189,6 +191,26 @@ export default function MyCourseDetail() {
                                             {selectedLesson.content}
                                         </div>
                                     )}
+
+                                    {/* Course Progress Mini Info */}
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-slate-50">
+                                        <div className="text-center md:text-left">
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Thời lượng</p>
+                                            <p className="font-bold text-slate-700">{selectedLesson.duration}</p>
+                                        </div>
+                                        <div className="text-center md:text-left">
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Cấp độ</p>
+                                            <p className="font-bold text-slate-700">{course.level}</p>
+                                        </div>
+                                        <div className="text-center md:text-left">
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Hình thức</p>
+                                            <p className="font-bold text-slate-700">Online</p>
+                                        </div>
+                                        <div className="text-center md:text-left">
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Hỗ trợ</p>
+                                            <p className="font-bold text-slate-700">Trực tiếp</p>
+                                        </div>
+                                    </div>
                                 </>
                             )}
                         </div>
@@ -196,7 +218,7 @@ export default function MyCourseDetail() {
 
                     {/* Sidebar Playlist */}
                     <aside className="space-y-6">
-                        <div className="rounded-[32px] bg-white shadow-xl border border-slate-100 flex flex-col max-h-[70vh] sticky top-6">
+                        <div className="rounded-[32px] bg-white shadow-xl border border-slate-100 flex flex-col max-h-[70vh] top-6">
                             <div className="p-6 border-b border-slate-50">
                                 <h3 className="text-lg font-black text-slate-900">Nội dung khóa học</h3>
                                 <p className="text-xs font-bold text-slate-400 mt-1 uppercase">{lessons.length} bài giảng</p>
@@ -217,7 +239,7 @@ export default function MyCourseDetail() {
                                         <div className="text-left flex-1">
                                             <p className="text-[13px] font-bold leading-snug line-clamp-2">{lesson.title}</p>
                                             <p className={`text-[11px] mt-1 ${selectedLessonId === lesson.id ? "text-white/80" : "text-slate-400"}`}>
-                                                {lesson.duration || "Video"}
+                                                Xem bài giảng
                                             </p>
                                         </div>
                                     </button>

@@ -14,6 +14,18 @@ export const getListLesson = createAsyncThunk(
   },
 );
 
+export const getListLessonAdmin = createAsyncThunk(
+  "lesson/getListLessonAdmin",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await ApiLesson.getAllAdmin(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to fetch lessons");
+    }
+  },
+);
+
 // Async thunk for fetching single lesson - chỉ dùng cho redux
 export const getLessonById = createAsyncThunk(
   "lesson/getLessonById",
@@ -46,6 +58,21 @@ const lessonSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // getListLessonAdmin
+      .addCase(getListLessonAdmin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      }) // <-- Sửa lỗi: Đã thêm đóng ngoặc đơn ')' ở đây
+      .addCase(getListLessonAdmin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.LessonList = action.payload?.data || [];
+        state.LessonTotal = action.payload?.total || 0;
+      }) // <-- Sửa lỗi: Đã thêm đóng ngoặc đơn ')' ở đây
+      .addCase(getListLessonAdmin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
       // getListLesson
       .addCase(getListLesson.pending, (state) => {
         state.loading = true;
@@ -53,13 +80,14 @@ const lessonSlice = createSlice({
       })
       .addCase(getListLesson.fulfilled, (state, action) => {
         state.loading = false;
-        state.LessonList = action.payload.data || [];
-        state.LessonTotal = action.payload.total || 0;
+        state.LessonList = action.payload?.data || [];
+        state.LessonTotal = action.payload?.total || 0;
       })
       .addCase(getListLesson.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
+
       // getLessonById
       .addCase(getLessonById.pending, (state) => {
         state.loading = true;
@@ -67,7 +95,7 @@ const lessonSlice = createSlice({
       })
       .addCase(getLessonById.fulfilled, (state, action) => {
         state.loading = false;
-        state.currentLesson = action.payload.data;
+        state.currentLesson = action.payload?.data || null;
       })
       .addCase(getLessonById.rejected, (state, action) => {
         state.loading = false;

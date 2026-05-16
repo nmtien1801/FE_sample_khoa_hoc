@@ -26,6 +26,18 @@ export const getListCourse = createAsyncThunk(
   },
 );
 
+export const getCourseAdmin = createAsyncThunk(
+  "course/getCourseAdmin",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await ApiCourse.getAllAdmin(params);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to fetch courses");
+    }
+  },
+);
+
 // Async thunk for fetching single course - chỉ dùng cho redux
 export const getCourseById = createAsyncThunk(
   "course/getCourseById",
@@ -58,6 +70,21 @@ const courseSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // getCourseAdmin
+      .addCase(getCourseAdmin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCourseAdmin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.CourseList = action.payload.data || [];
+        state.CourseTotal = action.payload.total || 0;
+      })
+      .addCase(getCourseAdmin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
       // getListCourseByUserId
       .addCase(getListCourseByUserId.pending, (state) => {
         state.loading = true;

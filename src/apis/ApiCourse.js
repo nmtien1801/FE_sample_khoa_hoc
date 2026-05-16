@@ -10,6 +10,9 @@ const courseApi = {
   create: (data) => ApiManager.post("/courses", data),
   update: (id, data) => ApiManager.put(`/courses/${id}`, data),
   delete: (id) => ApiManager.delete(`/courses/${id}`),
+
+  // admin
+  getAllAdmin: (params = {}) => ApiManager.get("/admin/courses", { params }),
 };
 
 export default courseApi;

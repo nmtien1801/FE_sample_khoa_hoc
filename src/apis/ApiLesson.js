@@ -30,6 +30,12 @@ const ApiLesson = {
     const response = await ApiManager.delete(`/lessons/${id}`);
     return response.data;
   },
+
+  // admin
+  getAllAdmin: async (params = {}) => {
+    const response = await ApiManager.get("/admin/lessons", { params });
+    return response.data;
+  },
 };
 
 export default ApiLesson;

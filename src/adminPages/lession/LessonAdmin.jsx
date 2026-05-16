@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Plus, GripVertical, PlayCircle, Edit, Trash, RefreshCw } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { getListCourse } from '../../redux/courseSlice';
+import { getCourseAdmin } from '../../redux/courseSlice';
 import ApiLesson from '../../apis/ApiLesson';
 import LessonModal from './LessonModal';
 
@@ -25,7 +25,7 @@ const LessonAdmin = () => {
 
   // Load danh sách khóa học
   useEffect(() => {
-    if (CourseList.length === 0) dispatch(getListCourse());
+    if (CourseList.length === 0) dispatch(getCourseAdmin());
   }, [dispatch]);
 
   // Load bài học khi chọn khóa học
@@ -40,7 +40,7 @@ const LessonAdmin = () => {
   const fetchLessons = async () => {
     setLoadingLessons(true);
     try {
-      const data = await ApiLesson.getAll({ courseId: selectedCourseId });
+      const data = await ApiLesson.getAllAdmin({ courseId: selectedCourseId });
       // API trả về array hoặc { data: [...] } tuỳ BE
       const list = Array.isArray(data) ? data : data?.rows || [];
       setLessons([...list].sort((a, b) => a.order - b.order));
@@ -108,9 +108,8 @@ const LessonAdmin = () => {
     <div className="p-6 bg-slate-50 min-h-screen">
       {/* Toast */}
       {toast && (
-        <div className={`fixed top-6 right-6 z-[200] px-6 py-4 rounded-2xl shadow-xl font-bold text-sm animate-in slide-in-from-top-2 ${
-          toast.type === 'error' ? 'bg-red-500 text-white' : 'bg-[#00bc86] text-white'
-        }`}>
+        <div className={`fixed top-6 right-6 z-[200] px-6 py-4 rounded-2xl shadow-xl font-bold text-sm animate-in slide-in-from-top-2 ${toast.type === 'error' ? 'bg-red-500 text-white' : 'bg-[#00bc86] text-white'
+          }`}>
           {toast.message}
         </div>
       )}
@@ -145,9 +144,8 @@ const LessonAdmin = () => {
             {selectedCourse && (
               <div className="mt-2 flex items-center gap-3">
                 <span className="text-[11px] font-bold text-slate-400">{lessons.length} bài học</span>
-                <span className={`px-2 py-0.5 text-[10px] font-black uppercase rounded-full ${
-                  selectedCourse.status === 'published' ? 'bg-green-50 text-[#00bc86]' : 'bg-amber-50 text-amber-500'
-                }`}>{selectedCourse.status}</span>
+                <span className={`px-2 py-0.5 text-[10px] font-black uppercase rounded-full ${selectedCourse.status === 'published' ? 'bg-green-50 text-[#00bc86]' : 'bg-amber-50 text-amber-500'
+                  }`}>{selectedCourse.status}</span>
               </div>
             )}
           </div>
@@ -155,11 +153,10 @@ const LessonAdmin = () => {
           <button
             onClick={handleOpenAddModal}
             disabled={!selectedCourseId}
-            className={`flex items-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all self-start shadow-md ${
-              selectedCourseId
+            className={`flex items-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all self-start shadow-md ${selectedCourseId
                 ? 'bg-[#00bc86] text-white hover:bg-[#00a374] hover:shadow-green-100 active:scale-95'
                 : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
-            }`}
+              }`}
           >
             <Plus size={18} /> Thêm bài học mới
           </button>
@@ -212,7 +209,7 @@ const LessonAdmin = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+                <div className="flex gap-2 flex-shrink-0">
                   <button
                     onClick={() => handleOpenEditModal(lesson)}
                     className="p-3 bg-blue-50 text-blue-500 rounded-xl hover:bg-blue-500 hover:text-white transition-all shadow-sm"

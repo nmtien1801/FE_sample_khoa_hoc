@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Plus, Edit2, Trash2, Eye, Search, RefreshCw } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getListCourse } from '../../redux/courseSlice';
+import { getCourseAdmin } from '../../redux/courseSlice';
 import courseApi from '../../apis/ApiCourse';
 import CourseModal from './CourseModal';
 
@@ -20,7 +20,7 @@ const CourseAdmin = () => {
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
-    dispatch(getListCourse());
+    dispatch(getCourseAdmin());
   }, [dispatch]);
 
   const showToast = (message, type = 'success') => {
@@ -50,7 +50,7 @@ const CourseAdmin = () => {
         showToast('Thêm khóa học thành công!');
       }
       setIsModalOpen(false);
-      dispatch(getListCourse()); // Reload danh sách
+      dispatch(getCourseAdmin()); // Reload danh sách
     } catch (error) {
       showToast(error?.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
     } finally {
@@ -64,7 +64,7 @@ const CourseAdmin = () => {
     try {
       await courseApi.delete(id);
       showToast('Đã xóa khóa học thành công!');
-      dispatch(getListCourse());
+      dispatch(getCourseAdmin());
     } catch (error) {
       showToast(error?.response?.data?.message || 'Xóa thất bại, vui lòng thử lại.', 'error');
     } finally {
@@ -92,7 +92,7 @@ const CourseAdmin = () => {
           </div>
           <div className="flex gap-3">
             <button
-              onClick={() => dispatch(getListCourse())}
+              onClick={() => dispatch(getCourseAdmin())}
               className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-5 py-4 rounded-2xl font-bold hover:bg-slate-50 transition-all"
             >
               <RefreshCw size={18} /> Tải lại
